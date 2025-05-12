@@ -1,0 +1,8 @@
+transformers
+torch
+fastapi[standard]
+
+# To run the tests
+pytest
+
+confluent-kafka
