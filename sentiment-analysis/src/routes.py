@@ -12,5 +12,5 @@ async def sentiment_analysis(request: SentimentRequest):
     """
     Analyze the sentiment of the provided text.
     """
-    sentiment = analyze_sentiment(request.text)
-    return sentiment[0]
+    result = analyze_sentiment(request.text)
+    return result

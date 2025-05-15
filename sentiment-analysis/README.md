@@ -22,10 +22,9 @@ A project to analyze, classificate and rank sentiments in texts.
 - Example response:
   ```json
   {
-    "label": "5 stars",
-    "score": 0.7255880236625671
+      "feedback": "This is a great product!",
+      "stars_ranking": 5,
+      "predominant_emotion": "joy",
+      "general_classification": "POSITIVE"
   }
   ```
-
-### How to run the tests
-- Run the command `pytest tests/tests.py`
