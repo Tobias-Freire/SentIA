@@ -32,12 +32,10 @@ services:
     networks:
       - kafka-net
 
-  streamlit-app:
+  consume-produce:
     build:
-      context: ./streamlit-ui
-      dockerfile: Dockerfile
-    ports:
-      - "8501:8501"
+      context: ./sentiment-analysis-service
+      dockerfile: dockerfile
     depends_on:
       - kafka
     networks:
