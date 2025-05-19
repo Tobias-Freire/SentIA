@@ -1,5 +1,10 @@
 transformers
 torch
+
 fastapi[standard]
 
 confluent-kafka
+
+pymongo
+
+python-dotenv

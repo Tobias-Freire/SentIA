@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from src.analysis import analyze_sentiment
 from pydantic import BaseModel
+from src.analysis import analyze_sentiment
 
 router = APIRouter()
 

@@ -31,24 +31,15 @@ services:
       - kafka
     networks:
       - kafka-net
-  
-  mongdb:
-    image: mongo:latest
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=example
-      - MONGO_INITDB_DATABASE=feedbacks
-    networks:
-      - kafka-net
 
   feedback-analysis-service:
     build:
       context: ./sentiment-analysis-service
       dockerfile: dockerfile
+    expose:
+      - "8000:8000"
+    environment:
+      - MONGO_URI=${MONGO_CONN_STRING}
     depends_on:
       - kafka
     networks:
