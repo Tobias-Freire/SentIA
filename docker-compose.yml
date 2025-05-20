@@ -31,15 +31,29 @@ services:
       - kafka
     networks:
       - kafka-net
+  
+  mongodb:
+    image: mongo:latest
+    hostname: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db/
+    networks:
+      - kafka-net
 
   feedback-analysis-service:
     build:
       context: ./sentiment-analysis-service
       dockerfile: dockerfile
-    expose:
+    ports:
       - "8000:8000"
     environment:
-      - MONGO_URI=${MONGO_CONN_STRING}
+      MONGO_USERNAME: ${MONGO_USERNAME}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
     depends_on:
       - kafka
     networks:
@@ -48,3 +62,8 @@ services:
 networks:
   kafka-net:
     driver: bridge
+
+volumes:
+  mongodb-data:
+    driver: local
+    name: mongo-data

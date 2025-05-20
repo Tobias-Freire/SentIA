@@ -7,4 +7,6 @@ consumer_conf = {
 }
 topics = ['feedbacks']
 
-mongo_uri = os.getenv('MONGO_URI')
+mongo_username = os.getenv('MONGO_USERNAME')
+mongo_password = os.getenv('MONGO_PASSWORD')
+mongo_uri = f"mongodb://{mongo_username}:{mongo_password}@mongodb:27017/sentia?authSource=admin"
