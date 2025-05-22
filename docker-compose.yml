@@ -69,11 +69,18 @@ services:
     environment:
       MONGO_USERNAME: ${MONGO_USERNAME}
       MONGO_PASSWORD: ${MONGO_PASSWORD}
+      TRANSFORMERS_CACHE: /models_cache
+    volumes:
+      - models_cache:/models_cache
     depends_on:
       - kafka
       - mongodb
     networks:
       - kafka-net
+    deploy:
+      resources:
+        limits:
+          memory: 4G
 
 networks:
   kafka-net:
@@ -83,3 +90,6 @@ volumes:
   mongodb-data:
     driver: local
     name: mongo-data
+  models_cache:
+    driver: local
+    name: models_cache

@@ -1,5 +1,5 @@
 import concurrent.futures
-import functools
+from functools import lru_cache
 from transformers import pipeline
 from torch import cuda
 
@@ -34,7 +34,7 @@ def process_sentiment(text):
     result = sentiment_pipeline(text)[0]
     return result["label"]
 
-@functools.lru_cache(maxsize=128) 
+@lru_cache(maxsize=128) 
 def analyze_sentiment(text):
     try:
         with concurrent.futures.ThreadPoolExecutor() as executor:
