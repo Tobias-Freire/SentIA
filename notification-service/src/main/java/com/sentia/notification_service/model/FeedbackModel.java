@@ -13,6 +13,7 @@ public class FeedbackModel {
     private int stars_rank;
     private String predominant_emotion;
     private String general_classification;
+    private String datetime;
 
     public FeedbackModel(String id, String feedback, int stars_rank, String predominant_emotion, String general_classification) {
         super();
@@ -21,5 +22,6 @@ public class FeedbackModel {
         this.stars_rank = stars_rank;
         this.predominant_emotion = predominant_emotion;
         this.general_classification = general_classification;
+        this.datetime = datetime;
     }
 }
