@@ -70,6 +70,7 @@ services:
       MONGO_USERNAME: ${MONGO_USERNAME}
       MONGO_PASSWORD: ${MONGO_PASSWORD}
       TRANSFORMERS_CACHE: /models_cache
+      TZ: America/Sao_Paulo
     volumes:
       - models_cache:/models_cache
     depends_on:
