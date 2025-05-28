@@ -15,7 +15,7 @@ public class FeedbackModel {
     private String general_classification;
     private String datetime;
 
-    public FeedbackModel(String id, String feedback, int stars_rank, String predominant_emotion, String general_classification) {
+    public FeedbackModel(String id, String feedback, int stars_rank, String predominant_emotion, String general_classification, String datetime) {
         super();
         this.id = id;
         this.feedback = feedback;
