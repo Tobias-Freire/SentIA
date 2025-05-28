@@ -1,7 +1,8 @@
-import concurrent.futures
 from functools import lru_cache
 from transformers import pipeline
 from torch import cuda
+import concurrent.futures
+from datetime import datetime
 
 device = 0 if cuda.is_available() else -1
 
@@ -50,7 +51,8 @@ def analyze_sentiment(text):
                 "feedback": text,
                 "stars_rank": stars_rank,
                 "predominant_emotion": predominant_emotion,
-                "general_classification": general_classification
+                "general_classification": general_classification,
+                "datetime": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
     except Exception as e:
         return {
