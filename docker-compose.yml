@@ -82,6 +82,22 @@ services:
       resources:
         limits:
           memory: 4G
+  
+  sentia-frontend:
+    build:
+      context: ./sentia-frontend
+      dockerfile: dockerfile
+    ports:
+      - "8501:8501"
+    environment:
+      MONGO_USERNAME: ${MONGO_USERNAME}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
+    depends_on:
+      - kafka
+      - feedback-analysis-service
+      - mongodb
+    networks:
+      - kafka-net
 
 networks:
   kafka-net:
