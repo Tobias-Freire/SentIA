@@ -15,20 +15,6 @@ services:
 
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
-
-    networks:
-      - kafka-net
-
-  kafka-ui:
-    image: provectuslabs/kafka-ui:latest
-    ports:
-      - 8080:8080
-    environment:
-      KAFKA_CLUSTERS_0_NAME: local
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9093
-    depends_on:
-      - kafka
     networks:
       - kafka-net
   
@@ -78,10 +64,6 @@ services:
       - mongodb
     networks:
       - kafka-net
-    deploy:
-      resources:
-        limits:
-          memory: 4G
   
   sentia-frontend:
     build:
