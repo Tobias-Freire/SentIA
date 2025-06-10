@@ -52,7 +52,7 @@ def analyze_sentiment(text):
                 "stars_rank": stars_rank,
                 "predominant_emotion": predominant_emotion,
                 "general_classification": general_classification,
-                "datetime": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                "datetime": datetime.now()
             }
     except Exception as e:
         return {
