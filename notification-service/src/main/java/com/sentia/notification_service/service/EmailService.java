@@ -13,14 +13,14 @@ public class EmailService {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    @Value("${spring.mail.username}")
-    private String sender;
+    @Value("${sender_email}")
+    private String sender_email;
 
     public String sendEmail(EmailDetails emailDetails) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
 
-            message.setFrom(sender);
+            message.setFrom(sender_email);
             message.setTo(emailDetails.getRecipient());
             message.setSubject(emailDetails.getSubject());
             message.setText(emailDetails.getBody());

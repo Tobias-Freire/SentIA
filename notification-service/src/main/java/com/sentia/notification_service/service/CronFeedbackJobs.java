@@ -23,13 +23,13 @@ public class CronFeedbackJobs {
         this.emailService = emailService;
     }
 
-    @Value("${max_neg_feedbacks_to_trigger}")
-    private int max_to_trigger;
+    @Value("${count_to_trigger}")
+    private int count_to_trigger;
 
-    @Value("${email_receiver_gmail_email}")
-    private String receiver_gmail_email;
+    @Value("${receiver_email}")
+    private String receiver_email;
 
-    @Scheduled(cron = "00 11 20 * * *")
+    @Scheduled(cron = "00 58 10 * * *")
     public void processDailyNegativeFeedbacks() {
         LocalDateTime end = LocalDateTime.now();
         LocalDateTime start = end.minusDays(1);
@@ -37,9 +37,9 @@ public class CronFeedbackJobs {
         List<FeedbackModel> feedbacks = feedbackRepository.findAllNegativeClassificationsByDateRange(start, end);
         long count = feedbackRepository.countNegativeClassificationsByDateRange(start, end);
 
-        if (count >= max_to_trigger) {
+        if (count >= count_to_trigger) {
             EmailTemplateService emailTemplateService = new EmailTemplateService();
-            EmailDetails emailDetails = emailTemplateService.createEmail(receiver_gmail_email, count, feedbacks);
+            EmailDetails emailDetails = emailTemplateService.createEmail(receiver_email, count, feedbacks);
 
             emailService.sendEmail(emailDetails);
         }
