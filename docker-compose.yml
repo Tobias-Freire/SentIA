@@ -22,10 +22,10 @@ services:
     image: mongo:latest
     hostname: mongodb
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_ROOT_USERNAME: ${mongodb_username}
+      MONGO_INITDB_ROOT_PASSWORD: ${mongodb_password}
     ports:
-      - "27017:27017"
+      - "${mongodb_port}:27017"
     volumes:
       - mongodb-data:/data/db/
     networks:
@@ -36,8 +36,8 @@ services:
     ports:
       - "8081:8081"
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_USERNAME}
-      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_PASSWORD}
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${mongodb_username}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${mongodb_password}
       ME_CONFIG_MONGODB_SERVER: mongodb
       ME_CONFIG_BASICAUTH_USERNAME: admin
       ME_CONFIG_BASICAUTH_PASSWORD: pass
@@ -75,7 +75,8 @@ services:
       sender_email: ${sender_email}
       sender_app_password: ${sender_app_password}
       receiver_email: ${receiver_email}
-      count_to_trigger: ${count_to_trigger}
+      daily_count_to_trigger: ${daily_count_to_trigger}
+      weekly_count_to_trigger: ${weekly_count_to_trigger}
       TZ: America/Sao_Paulo
     depends_on:
       - mongodb
