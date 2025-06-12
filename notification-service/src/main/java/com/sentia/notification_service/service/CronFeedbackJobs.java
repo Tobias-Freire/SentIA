@@ -23,13 +23,16 @@ public class CronFeedbackJobs {
         this.emailService = emailService;
     }
 
-    @Value("${count_to_trigger}")
-    private int count_to_trigger;
+    @Value("${daily_count_to_trigger}")
+    private long daily_count_to_trigger;
+
+    @Value("${weekly_count_to_trigger}")
+    private long weekly_count_to_trigger;
 
     @Value("${receiver_email}")
     private String receiver_email;
 
-    @Scheduled(cron = "00 58 10 * * *")
+    @Scheduled(cron = "00 00 14 * * *")
     public void processDailyNegativeFeedbacks() {
         LocalDateTime end = LocalDateTime.now();
         LocalDateTime start = end.minusDays(1);
@@ -37,9 +40,25 @@ public class CronFeedbackJobs {
         List<FeedbackModel> feedbacks = feedbackRepository.findAllNegativeClassificationsByDateRange(start, end);
         long count = feedbackRepository.countNegativeClassificationsByDateRange(start, end);
 
-        if (count >= count_to_trigger) {
+        if (count >= daily_count_to_trigger) {
             EmailTemplateService emailTemplateService = new EmailTemplateService();
-            EmailDetails emailDetails = emailTemplateService.createEmail(receiver_email, count, feedbacks);
+            EmailDetails emailDetails = emailTemplateService.createDailyNotificationEmail(receiver_email, count, feedbacks);
+
+            emailService.sendEmail(emailDetails);
+        }
+    }
+
+    @Scheduled(cron = "00 00 14 * * 4")
+    public void processWeeklyNegativeFeedbacks() {
+        LocalDateTime end = LocalDateTime.now();
+        LocalDateTime start = end.minusDays(7);
+
+        List<FeedbackModel> feedbacks = feedbackRepository.findAllNegativeClassificationsByDateRange(start, end);
+        long count = feedbackRepository.countNegativeClassificationsByDateRange(start, end);
+
+        if (count >= weekly_count_to_trigger) {
+            EmailTemplateService emailTemplateService = new EmailTemplateService();
+            EmailDetails emailDetails = emailTemplateService.createWeeklyNotificationEmail(receiver_email, count, feedbacks);
 
             emailService.sendEmail(emailDetails);
         }
